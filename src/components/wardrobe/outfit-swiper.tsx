@@ -1,14 +1,13 @@
 import { useState } from "react"
 import { OutfitSuggestion } from "@/types/wardrobe"
 import { SwipeCard } from "@/components/ui/swipe-card"
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
+import { OutfitTryOn } from "./outfit-tryon"
 import { Button } from "@/components/ui/button"
-import { Heart, X, Shuffle } from "lucide-react"
-import { cn } from "@/lib/utils"
+import { Shuffle, Sparkles } from "lucide-react"
 
 interface OutfitSwiperProps {
   suggestions: OutfitSuggestion[]
+  userPhoto?: string | null
   onLike?: (suggestion: OutfitSuggestion) => void
   onDislike?: (suggestion: OutfitSuggestion) => void
   onShuffle?: () => void
@@ -16,6 +15,7 @@ interface OutfitSwiperProps {
 
 export const OutfitSwiper = ({ 
   suggestions, 
+  userPhoto,
   onLike, 
   onDislike, 
   onShuffle 
@@ -59,92 +59,29 @@ export const OutfitSwiper = ({
         </p>
       </div>
 
-      <SwipeCard
-        onSwipeLeft={handleSwipeLeft}
-        onSwipeRight={handleSwipeRight}
-        className="w-full max-w-sm"
-      >
-        <Card className={cn(
-          "overflow-hidden bg-gradient-to-br from-card via-card to-muted/30",
-          "border-border/50 shadow-card"
-        )}>
-          <CardContent className="p-0">
-            <div className="aspect-[3/4] overflow-hidden bg-gradient-to-br from-secondary/20 to-accent/20">
-              <div className="grid grid-cols-2 gap-2 p-4 h-full">
-                {currentSuggestion.outfit.items.slice(0, 4).map((item, index) => (
-                  <div 
-                    key={item.id} 
-                    className={cn(
-                      "rounded-lg overflow-hidden bg-card",
-                      index === 0 && currentSuggestion.outfit.items.length === 1 && "col-span-2"
-                    )}
-                  >
-                    <img
-                      src={item.imageUrl}
-                      alt={item.name}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                ))}
-              </div>
-            </div>
-            
-            <div className="p-6 space-y-4">
-              <div>
-                <h3 className="text-lg font-semibold">{currentSuggestion.outfit.name}</h3>
-                <p className="text-sm text-muted-foreground mt-1">
-                  {currentSuggestion.reasoning}
-                </p>
-              </div>
-              
-              <div className="flex flex-wrap gap-2">
-                {currentSuggestion.outfit.items.map((item) => (
-                  <Badge 
-                    key={item.id}
-                    variant="secondary"
-                    className="bg-secondary/60"
-                  >
-                    {item.name}
-                  </Badge>
-                ))}
-              </div>
-              
-              <div className="flex justify-center items-center gap-4 pt-4">
-                <Badge className="bg-primary/10 text-primary border-primary/20">
-                  {Math.round(currentSuggestion.matchScore * 100)}% match
-                </Badge>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </SwipeCard>
-
-      <div className="flex justify-center items-center gap-6">
-        <Button
-          variant="outline"
-          size="lg"
-          onClick={handleSwipeLeft}
-          className="rounded-full w-14 h-14 border-destructive/30 hover:bg-destructive/10"
+      <div className="relative max-w-md mx-auto">
+        <SwipeCard
+          onSwipeLeft={() => handleSwipeLeft()}
+          onSwipeRight={() => handleSwipeRight()}
         >
-          <X className="w-6 h-6 text-destructive" />
-        </Button>
-        
+          <OutfitTryOn
+            suggestion={currentSuggestion}
+            userPhoto={userPhoto}
+            onLike={() => handleSwipeRight()}
+            onDislike={() => handleSwipeLeft()}
+          />
+        </SwipeCard>
+      </div>
+
+      <div className="flex justify-center items-center gap-4">
         <Button
           variant="outline"
           size="lg"
           onClick={onShuffle}
-          className="rounded-full w-12 h-12"
+          className="rounded-full border-primary/30 hover:bg-primary/10"
         >
-          <Shuffle className="w-5 h-5" />
-        </Button>
-        
-        <Button
-          variant="outline"
-          size="lg"
-          onClick={handleSwipeRight}
-          className="rounded-full w-14 h-14 border-accent/30 hover:bg-accent/10"
-        >
-          <Heart className="w-6 h-6 text-accent" />
+          <Shuffle className="w-5 h-5 mr-2" />
+          Shuffle
         </Button>
       </div>
     </div>

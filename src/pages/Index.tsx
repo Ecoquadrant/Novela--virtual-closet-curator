@@ -10,6 +10,7 @@ import { WardrobeGrid } from "@/components/wardrobe/wardrobe-grid"
 import { OutfitSwiper } from "@/components/wardrobe/outfit-swiper"
 import { useWardrobe } from "@/hooks/use-wardrobe"
 import { useAuth } from "@/contexts/AuthContext"
+import { useProfile } from "@/hooks/use-profile"
 import { Occasion, OutfitSuggestion } from "@/types/wardrobe"
 import { Sparkles, Shirt, Heart, LogOut, User } from "lucide-react"
 import heroImage from "@/assets/wardrobe-hero.jpg"
@@ -18,6 +19,7 @@ import { toast } from "sonner"
 const Index = () => {
   const { items, addItem, generateOutfitSuggestions, saveOutfit } = useWardrobe()
   const { user, signOut } = useAuth()
+  const { profile } = useProfile()
   const [activeTab, setActiveTab] = useState("discover")
   const [occasionPrompt, setOccasionPrompt] = useState("")
   const [suggestions, setSuggestions] = useState<OutfitSuggestion[]>([])
@@ -98,9 +100,9 @@ const Index = () => {
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="relative h-10 w-10 rounded-full">
                   <Avatar className="h-10 w-10 border-2 border-primary/20">
-                    <AvatarImage src="" alt={user?.email || ''} />
+                    <AvatarImage src={profile?.avatar_url || ''} alt={profile?.full_name || user?.email || ''} />
                     <AvatarFallback className="bg-primary/10 text-primary">
-                      {user?.email?.charAt(0).toUpperCase()}
+                      {profile?.full_name?.charAt(0).toUpperCase() || user?.email?.charAt(0).toUpperCase()}
                     </AvatarFallback>
                   </Avatar>
                 </Button>
@@ -224,7 +226,7 @@ const Index = () => {
                     <CameraButton onCapture={handleImageCapture} size="lg" />
                   </div>
                 ) : (
-                  <WardrobeGrid items={items} />
+                  <WardrobeGrid items={items} userPhoto={profile?.avatar_url} />
                 )}
               </CardContent>
             </Card>
@@ -235,6 +237,7 @@ const Index = () => {
               <CardContent className="p-6">
                 <OutfitSwiper
                   suggestions={suggestions}
+                  userPhoto={profile?.avatar_url}
                   onLike={handleLikeOutfit}
                   onDislike={handleDislikeOutfit}
                   onShuffle={() => setSuggestions(prev => [...prev].sort(() => Math.random() - 0.5))}
