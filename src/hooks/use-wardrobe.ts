@@ -96,11 +96,26 @@ export const useWardrobe = () => {
     toast.success("Outfit saved to your collection!")
   }, [])
 
+  const deleteOutfit = useCallback((outfitId: string) => {
+    setOutfits(prev => prev.filter(outfit => outfit.id !== outfitId))
+    toast.success("Outfit removed from collection!")
+  }, [])
+
+  const toggleFavoriteOutfit = useCallback((outfitId: string) => {
+    setOutfits(prev => prev.map(outfit => 
+      outfit.id === outfitId 
+        ? { ...outfit, isFavorite: !outfit.isFavorite }
+        : outfit
+    ))
+  }, [])
+
   return {
     items,
     outfits,
     addItem,
     generateOutfitSuggestions,
-    saveOutfit
+    saveOutfit,
+    deleteOutfit,
+    toggleFavoriteOutfit
   }
 }

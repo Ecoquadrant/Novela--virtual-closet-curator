@@ -8,21 +8,24 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { CameraButton } from "@/components/ui/camera-button"
 import { WardrobeGrid } from "@/components/wardrobe/wardrobe-grid"
 import { OutfitSwiper } from "@/components/wardrobe/outfit-swiper"
+import { SavedOutfitModal } from "@/components/wardrobe/saved-outfit-modal"
 import { useWardrobe } from "@/hooks/use-wardrobe"
 import { useAuth } from "@/contexts/AuthContext"
 import { useProfile } from "@/hooks/use-profile"
-import { Occasion, OutfitSuggestion } from "@/types/wardrobe"
-import { Sparkles, Shirt, Heart, LogOut, User } from "lucide-react"
+import { Occasion, OutfitSuggestion, Outfit } from "@/types/wardrobe"
+import { Sparkles, Shirt, Heart, LogOut, User, Eye } from "lucide-react"
 import heroImage from "@/assets/wardrobe-hero.jpg"
 import { toast } from "sonner"
 
 const Index = () => {
-  const { items, addItem, generateOutfitSuggestions, saveOutfit } = useWardrobe()
+  const { items, outfits, addItem, generateOutfitSuggestions, saveOutfit, deleteOutfit, toggleFavoriteOutfit } = useWardrobe()
   const { user, signOut } = useAuth()
   const { profile } = useProfile()
   const [activeTab, setActiveTab] = useState("discover")
   const [occasionPrompt, setOccasionPrompt] = useState("")
   const [suggestions, setSuggestions] = useState<OutfitSuggestion[]>([])
+  const [selectedOutfit, setSelectedOutfit] = useState<Outfit | null>(null)
+  const [showOutfitModal, setShowOutfitModal] = useState(false)
 
   const handleImageCapture = (imageUrl: string) => {
     // In a real app, this would also analyze the image and extract details
@@ -69,6 +72,8 @@ const Index = () => {
 
   const handleLikeOutfit = (suggestion: OutfitSuggestion) => {
     saveOutfit(suggestion.outfit)
+    setSelectedOutfit(suggestion.outfit)
+    setShowOutfitModal(true)
   }
 
   const handleDislikeOutfit = (suggestion: OutfitSuggestion) => {
@@ -146,7 +151,7 @@ const Index = () => {
       {/* Main Content */}
       <div className="container mx-auto px-4 py-8">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-3 mb-8 bg-card/50 backdrop-blur-sm">
+          <TabsList className="grid w-full grid-cols-4 mb-8 bg-card/50 backdrop-blur-sm">
             <TabsTrigger value="discover" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
               <Sparkles className="w-4 h-4 mr-2" />
               Discover
@@ -158,6 +163,10 @@ const Index = () => {
             <TabsTrigger value="swipe" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
               <Heart className="w-4 h-4 mr-2" />
               Outfits
+            </TabsTrigger>
+            <TabsTrigger value="saved" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+              <Eye className="w-4 h-4 mr-2" />
+              Saved
             </TabsTrigger>
           </TabsList>
 
@@ -245,8 +254,83 @@ const Index = () => {
               </CardContent>
             </Card>
           </TabsContent>
+
+          <TabsContent value="saved">
+            <Card className="bg-gradient-to-br from-card to-muted/50 border-border/50 shadow-card">
+              <CardHeader>
+                <CardTitle>Saved Outfits</CardTitle>
+                <CardDescription>{outfits.length} outfits in your collection</CardDescription>
+              </CardHeader>
+              <CardContent>
+                {outfits.length === 0 ? (
+                  <div className="text-center py-12">
+                    <div className="text-6xl mb-4">💫</div>
+                    <h3 className="text-xl font-semibold mb-2">No saved outfits yet</h3>
+                    <p className="text-muted-foreground">
+                      Like some outfit suggestions to save them here!
+                    </p>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+                    {outfits.map((outfit) => (
+                      <Card 
+                        key={outfit.id}
+                        className="group cursor-pointer hover:shadow-lg transition-all duration-200 hover:scale-105"
+                        onClick={() => {
+                          setSelectedOutfit(outfit)
+                          setShowOutfitModal(true)
+                        }}
+                      >
+                        <CardContent className="p-3">
+                          <div className="aspect-square bg-muted rounded-lg mb-3 overflow-hidden">
+                            <div className="grid grid-cols-2 gap-1 p-2 h-full">
+                              {outfit.items.slice(0, 4).map((item) => (
+                                <div key={item.id} className="aspect-square bg-background rounded overflow-hidden">
+                                  <img 
+                                    src={item.imageUrl} 
+                                    alt={item.name}
+                                    className="w-full h-full object-cover"
+                                  />
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                          <h3 className="font-semibold text-sm mb-1 truncate">{outfit.name}</h3>
+                          <p className="text-xs text-muted-foreground capitalize">{outfit.occasion}</p>
+                          <Button 
+                            size="sm" 
+                            className="w-full mt-2 bg-gradient-to-r from-primary to-accent hover:from-accent hover:to-primary"
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              setSelectedOutfit(outfit)
+                              setShowOutfitModal(true)
+                            }}
+                          >
+                            <Eye className="w-3 h-3 mr-1" />
+                            Virtual Try-On
+                          </Button>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </TabsContent>
         </Tabs>
       </div>
+
+      <SavedOutfitModal
+        outfit={selectedOutfit}
+        userPhoto={profile?.avatar_url}
+        isOpen={showOutfitModal}
+        onClose={() => setShowOutfitModal(false)}
+        onDelete={(outfit) => {
+          deleteOutfit(outfit.id)
+          setShowOutfitModal(false)
+        }}
+        onToggleFavorite={(outfit) => toggleFavoriteOutfit(outfit.id)}
+      />
     </div>
   )
 }

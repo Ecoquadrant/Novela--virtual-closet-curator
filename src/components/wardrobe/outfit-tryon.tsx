@@ -117,24 +117,26 @@ export const OutfitTryOn = ({ suggestion, userPhoto, onLike, onDislike }: Outfit
         </div>
 
         <div className="space-y-3">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => setShowTryOn(!showTryOn)}
-            className="w-full"
-          >
-            {showTryOn ? (
-              <>
-                <EyeOff className="w-4 h-4 mr-2" />
-                Show Items Separately
-              </>
-            ) : (
-              <>
-                <Eye className="w-4 h-4 mr-2" />
-                Virtual Try-On
-              </>
-            )}
-          </Button>
+          <div className="flex gap-2">
+            <Button
+              variant={showTryOn ? "default" : "outline"}
+              size="sm"
+              onClick={() => setShowTryOn(!showTryOn)}
+              className="flex-1"
+            >
+              {showTryOn ? (
+                <>
+                  <EyeOff className="w-4 h-4 mr-2" />
+                  Show Items
+                </>
+              ) : (
+                <>
+                  <Eye className="w-4 h-4 mr-2" />
+                  Virtual Try-On
+                </>
+              )}
+            </Button>
+          </div>
 
           <p className="text-sm text-muted-foreground text-center">
             {suggestion.reasoning}
