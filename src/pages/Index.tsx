@@ -6,6 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { CameraButton } from "@/components/ui/camera-button"
+import { ItemCategorizationForm } from "@/components/wardrobe/item-categorization-form"
 import { WardrobeGrid } from "@/components/wardrobe/wardrobe-grid"
 import { OutfitSwiper } from "@/components/wardrobe/outfit-swiper"
 import { SavedOutfitModal } from "@/components/wardrobe/saved-outfit-modal"
@@ -26,17 +27,26 @@ const Index = () => {
   const [suggestions, setSuggestions] = useState<OutfitSuggestion[]>([])
   const [selectedOutfit, setSelectedOutfit] = useState<Outfit | null>(null)
   const [showOutfitModal, setShowOutfitModal] = useState(false)
+  const [capturedImageUrl, setCapturedImageUrl] = useState<string | null>(null)
+  const [showCategorizationForm, setShowCategorizationForm] = useState(false)
 
   const handleImageCapture = (imageUrl: string) => {
-    // In a real app, this would also analyze the image and extract details
+    setCapturedImageUrl(imageUrl)
+    setShowCategorizationForm(true)
+  }
+
+  const handleItemCategorization = (data: any) => {
     addItem({
-      name: "New Item",
-      imageUrl,
-      category: "tops",
-      occasions: ["casual"],
-      colors: [],
-      tags: []
+      name: data.name,
+      imageUrl: data.imageUrl,
+      category: data.category,
+      occasions: data.occasions,
+      colors: data.colors || [],
+      tags: data.tags || [],
+      brand: data.brand,
+      price: data.price
     })
+    setActiveTab("wardrobe")
   }
 
   const handleGenerateOutfits = () => {
@@ -330,6 +340,13 @@ const Index = () => {
           setShowOutfitModal(false)
         }}
         onToggleFavorite={(outfit) => toggleFavoriteOutfit(outfit.id)}
+      />
+
+      <ItemCategorizationForm
+        open={showCategorizationForm}
+        onOpenChange={setShowCategorizationForm}
+        imageUrl={capturedImageUrl || ""}
+        onSubmit={handleItemCategorization}
       />
     </div>
   )

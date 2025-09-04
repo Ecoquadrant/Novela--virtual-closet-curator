@@ -6,6 +6,8 @@ export interface ClothingItem {
   colors: string[]
   tags: string[]
   occasions: Occasion[]
+  brand?: string
+  price?: number
   createdAt: Date
 }
 
