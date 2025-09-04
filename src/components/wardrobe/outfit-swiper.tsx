@@ -4,7 +4,6 @@ import { SwipeCard } from "@/components/ui/swipe-card"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Clothing3DViewer } from "@/components/ui/clothing-3d-viewer"
 import { Heart, X, Shuffle } from "lucide-react"
 import { cn } from "@/lib/utils"
 
@@ -76,16 +75,14 @@ export const OutfitSwiper = ({
                   <div 
                     key={item.id} 
                     className={cn(
-                      "rounded-lg overflow-hidden bg-gradient-to-br from-background/30 to-muted/20",
+                      "rounded-lg overflow-hidden bg-card",
                       index === 0 && currentSuggestion.outfit.items.length === 1 && "col-span-2"
                     )}
                   >
-                    <Clothing3DViewer 
-                      imageUrl={item.imageUrl}
-                      category={item.category}
-                      className="w-full h-full"
-                      autoRotate={true}
-                      enableControls={false}
+                    <img
+                      src={item.imageUrl}
+                      alt={item.name}
+                      className="w-full h-full object-cover"
                     />
                   </div>
                 ))}

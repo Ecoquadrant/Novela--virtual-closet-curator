@@ -1,7 +1,6 @@
 import { ClothingItem } from "@/types/wardrobe"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Clothing3DViewer } from "@/components/ui/clothing-3d-viewer"
 import { cn } from "@/lib/utils"
 
 interface WardrobeGridProps {
@@ -25,13 +24,11 @@ export const WardrobeGrid = ({ items, onItemClick }: WardrobeGridProps) => {
           onClick={() => onItemClick?.(item)}
         >
           <CardContent className="p-0">
-            <div className="aspect-square overflow-hidden bg-gradient-to-br from-background/50 to-muted/30">
-              <Clothing3DViewer 
-                imageUrl={item.imageUrl}
-                category={item.category}
-                className="w-full h-full"
-                autoRotate={true}
-                enableControls={false}
+            <div className="aspect-square overflow-hidden">
+              <img
+                src={item.imageUrl}
+                alt={item.name}
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
               />
             </div>
             <div className="p-3 space-y-2">
