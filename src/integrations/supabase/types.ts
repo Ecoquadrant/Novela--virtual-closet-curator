@@ -14,7 +14,75 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          body_shape: string | null
+          chest_bust: number | null
+          created_at: string
+          full_name: string | null
+          gender: string | null
+          height: number | null
+          hips: number | null
+          id: string
+          inseam: number | null
+          neck: number | null
+          preferred_bottom_size: string | null
+          preferred_dress_size: string | null
+          preferred_top_size: string | null
+          shoulder_width: number | null
+          sleeve_length: number | null
+          thigh: number | null
+          updated_at: string
+          user_id: string
+          waist: number | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          body_shape?: string | null
+          chest_bust?: number | null
+          created_at?: string
+          full_name?: string | null
+          gender?: string | null
+          height?: number | null
+          hips?: number | null
+          id?: string
+          inseam?: number | null
+          neck?: number | null
+          preferred_bottom_size?: string | null
+          preferred_dress_size?: string | null
+          preferred_top_size?: string | null
+          shoulder_width?: number | null
+          sleeve_length?: number | null
+          thigh?: number | null
+          updated_at?: string
+          user_id: string
+          waist?: number | null
+        }
+        Update: {
+          avatar_url?: string | null
+          body_shape?: string | null
+          chest_bust?: number | null
+          created_at?: string
+          full_name?: string | null
+          gender?: string | null
+          height?: number | null
+          hips?: number | null
+          id?: string
+          inseam?: number | null
+          neck?: number | null
+          preferred_bottom_size?: string | null
+          preferred_dress_size?: string | null
+          preferred_top_size?: string | null
+          shoulder_width?: number | null
+          sleeve_length?: number | null
+          thigh?: number | null
+          updated_at?: string
+          user_id?: string
+          waist?: number | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

@@ -3,17 +3,21 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { CameraButton } from "@/components/ui/camera-button"
 import { WardrobeGrid } from "@/components/wardrobe/wardrobe-grid"
 import { OutfitSwiper } from "@/components/wardrobe/outfit-swiper"
 import { useWardrobe } from "@/hooks/use-wardrobe"
+import { useAuth } from "@/contexts/AuthContext"
 import { Occasion, OutfitSuggestion } from "@/types/wardrobe"
-import { Sparkles, Shirt, Heart } from "lucide-react"
+import { Sparkles, Shirt, Heart, LogOut, User } from "lucide-react"
 import heroImage from "@/assets/wardrobe-hero.jpg"
 import { toast } from "sonner"
 
 const Index = () => {
   const { items, addItem, generateOutfitSuggestions, saveOutfit } = useWardrobe()
+  const { user, signOut } = useAuth()
   const [activeTab, setActiveTab] = useState("discover")
   const [occasionPrompt, setOccasionPrompt] = useState("")
   const [suggestions, setSuggestions] = useState<OutfitSuggestion[]>([])
@@ -69,6 +73,11 @@ const Index = () => {
     toast("Thanks for the feedback!")
   }
 
+  const handleLogout = async () => {
+    await signOut()
+    toast.success("Signed out successfully")
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/30">
       {/* Hero Section */}
@@ -82,8 +91,34 @@ const Index = () => {
           <div className="absolute inset-0 bg-gradient-to-r from-background/80 to-transparent" />
         </div>
         
-        <div className="relative px-6 py-12 text-center">
-          <div className="max-w-3xl mx-auto">
+        <div className="relative px-6 py-12">
+          {/* User Profile Header */}
+          <div className="absolute top-4 right-6">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="relative h-10 w-10 rounded-full">
+                  <Avatar className="h-10 w-10 border-2 border-primary/20">
+                    <AvatarImage src="" alt={user?.email || ''} />
+                    <AvatarFallback className="bg-primary/10 text-primary">
+                      {user?.email?.charAt(0).toUpperCase()}
+                    </AvatarFallback>
+                  </Avatar>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-56" align="end">
+                <DropdownMenuItem onClick={() => window.location.href = '/profile-setup'}>
+                  <User className="mr-2 h-4 w-4" />
+                  <span>Edit Profile</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={handleLogout}>
+                  <LogOut className="mr-2 h-4 w-4" />
+                  <span>Sign Out</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+
+          <div className="max-w-3xl mx-auto text-center">
             <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
               Your Virtual Wardrobe
             </h1>
