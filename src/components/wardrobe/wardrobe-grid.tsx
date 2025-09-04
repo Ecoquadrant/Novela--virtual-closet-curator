@@ -28,6 +28,7 @@ export const WardrobeGrid = ({ items, onItemClick }: WardrobeGridProps) => {
             <div className="aspect-square overflow-hidden bg-gradient-to-br from-background/50 to-muted/30">
               <Clothing3DViewer 
                 imageUrl={item.imageUrl}
+                category={item.category}
                 className="w-full h-full"
                 autoRotate={true}
                 enableControls={false}

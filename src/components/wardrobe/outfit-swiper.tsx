@@ -82,6 +82,7 @@ export const OutfitSwiper = ({
                   >
                     <Clothing3DViewer 
                       imageUrl={item.imageUrl}
+                      category={item.category}
                       className="w-full h-full"
                       autoRotate={true}
                       enableControls={false}
