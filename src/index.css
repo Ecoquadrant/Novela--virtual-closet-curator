@@ -20,22 +20,22 @@ All colors MUST be HSL. Premium gradients and animations.
     --popover: 30 25% 98%;
     --popover-foreground: 340 15% 15%;
 
-    /* Primary - Rose gold luxury */
-    --primary: 15 55% 65%;
+    /* Primary - Deep Emerald Green (addictive luxury) */
+    --primary: 158 62% 19%;
     --primary-foreground: 30 25% 98%;
-    --primary-glow: 15 65% 75%;
+    --primary-glow: 158 45% 35%;
 
-    /* Secondary - Soft lavender */
-    --secondary: 280 35% 90%;
-    --secondary-foreground: 340 15% 15%;
+    /* Secondary - Warm champagne gold */
+    --secondary: 45 65% 88%;
+    --secondary-foreground: 158 62% 19%;
 
     /* Muted tones */
     --muted: 32 20% 94%;
-    --muted-foreground: 340 10% 45%;
+    --muted-foreground: 158 15% 35%;
 
-    /* Accent - Warm coral */
-    --accent: 10 80% 75%;
-    --accent-foreground: 340 15% 15%;
+    /* Accent - Rich gold */
+    --accent: 42 78% 60%;
+    --accent-foreground: 158 62% 19%;
 
     /* Destructive */
     --destructive: 0 84% 60%;
@@ -44,18 +44,18 @@ All colors MUST be HSL. Premium gradients and animations.
     /* Borders and inputs */
     --border: 32 15% 88%;
     --input: 32 15% 92%;
-    --ring: 15 55% 65%;
+    --ring: 158 62% 19%;
 
-    /* Fashion-specific gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(15 55% 65%), hsl(15 65% 75%));
-    --gradient-luxury: linear-gradient(135deg, hsl(15 55% 65%), hsl(280 35% 85%));
+    /* Fashion-specific gradients - Emerald & Gold */
+    --gradient-primary: linear-gradient(135deg, hsl(158 62% 19%), hsl(158 45% 35%));
+    --gradient-luxury: linear-gradient(135deg, hsl(158 62% 19%), hsl(42 78% 60%));
     --gradient-card: linear-gradient(145deg, hsl(30 25% 98%), hsl(32 20% 96%));
-    --gradient-hero: linear-gradient(135deg, hsl(280 35% 90%), hsl(15 45% 85%));
+    --gradient-hero: linear-gradient(135deg, hsl(45 65% 88%), hsl(158 45% 35%));
 
     /* Elegant shadows */
-    --shadow-soft: 0 4px 20px -8px hsl(340 15% 15% / 0.1);
-    --shadow-card: 0 8px 32px -12px hsl(340 15% 15% / 0.15);
-    --shadow-elegant: 0 12px 40px -16px hsl(15 55% 65% / 0.3);
+    --shadow-soft: 0 4px 20px -8px hsl(158 15% 25% / 0.1);
+    --shadow-card: 0 8px 32px -12px hsl(158 15% 25% / 0.15);
+    --shadow-elegant: 0 12px 40px -16px hsl(158 62% 19% / 0.3);
 
     /* Smooth transitions */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -91,17 +91,17 @@ All colors MUST be HSL. Premium gradients and animations.
     --popover: 340 12% 12%;
     --popover-foreground: 32 30% 95%;
 
-    --primary: 15 65% 75%;
+    --primary: 158 45% 35%;
     --primary-foreground: 340 15% 8%;
-    --primary-glow: 15 75% 85%;
+    --primary-glow: 158 55% 45%;
 
-    --secondary: 280 20% 20%;
+    --secondary: 45 45% 25%;
     --secondary-foreground: 32 30% 95%;
 
     --muted: 340 10% 18%;
-    --muted-foreground: 340 8% 65%;
+    --muted-foreground: 158 8% 65%;
 
-    --accent: 10 70% 65%;
+    --accent: 42 68% 50%;
     --accent-foreground: 340 15% 8%;
 
     --destructive: 0 70% 55%;
@@ -109,17 +109,17 @@ All colors MUST be HSL. Premium gradients and animations.
 
     --border: 340 8% 22%;
     --input: 340 8% 18%;
-    --ring: 15 65% 75%;
+    --ring: 158 45% 35%;
 
-    /* Dark mode gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(15 65% 75%), hsl(15 75% 85%));
-    --gradient-luxury: linear-gradient(135deg, hsl(15 65% 75%), hsl(280 25% 35%));
+    /* Dark mode gradients - Emerald & Gold */
+    --gradient-primary: linear-gradient(135deg, hsl(158 45% 35%), hsl(158 55% 45%));
+    --gradient-luxury: linear-gradient(135deg, hsl(158 45% 35%), hsl(42 68% 50%));
     --gradient-card: linear-gradient(145deg, hsl(340 12% 12%), hsl(340 10% 16%));
-    --gradient-hero: linear-gradient(135deg, hsl(280 20% 20%), hsl(15 55% 25%));
+    --gradient-hero: linear-gradient(135deg, hsl(45 45% 25%), hsl(158 35% 25%));
 
     --shadow-soft: 0 4px 20px -8px hsl(0 0% 0% / 0.3);
     --shadow-card: 0 8px 32px -12px hsl(0 0% 0% / 0.4);
-    --shadow-elegant: 0 12px 40px -16px hsl(15 65% 75% / 0.2);
+    --shadow-elegant: 0 12px 40px -16px hsl(158 45% 35% / 0.2);
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
