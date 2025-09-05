@@ -6,8 +6,9 @@ import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { useAuth } from '@/contexts/AuthContext'
-import { LogIn, UserPlus, Sparkles } from 'lucide-react'
+import { LogIn, UserPlus } from 'lucide-react'
 import { toast } from 'sonner'
+import novelaLogo from '@/assets/novela-logo.png'
 
 const Auth = () => {
   const { signIn, signUp } = useAuth()
@@ -80,8 +81,12 @@ const Auth = () => {
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/30 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-primary to-accent rounded-full mb-4">
-            <Sparkles className="w-8 h-8 text-primary-foreground" />
+          <div className="inline-flex items-center justify-center w-20 h-20 mb-4">
+            <img 
+              src={novelaLogo} 
+              alt="Novela Logo" 
+              className="w-full h-full object-contain drop-shadow-lg"
+            />
           </div>
           <h1 className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
             Novela
