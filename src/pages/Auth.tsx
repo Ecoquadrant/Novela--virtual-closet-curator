@@ -85,7 +85,7 @@ const Auth = () => {
             <img 
               src={novelaLogo} 
               alt="Novela Logo" 
-              className="w-full h-full object-contain drop-shadow-lg"
+              className="w-full h-full object-contain opacity-80 mix-blend-multiply dark:mix-blend-screen filter brightness-90 dark:brightness-110"
             />
           </div>
           <h1 className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
