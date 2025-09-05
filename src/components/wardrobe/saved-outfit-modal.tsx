@@ -93,6 +93,18 @@ export const SavedOutfitModal = ({
             )}
           </div>
 
+          {!userPhoto && (
+            <div className="text-center p-4 bg-muted/30 rounded-lg">
+              <Eye className="w-8 h-8 mx-auto mb-2 text-muted-foreground" />
+              <p className="text-sm text-muted-foreground mb-2">
+                Upload a profile photo to see virtual try-on
+              </p>
+              <p className="text-xs text-muted-foreground">
+                Go to Profile tab → Camera button to add your photo
+              </p>
+            </div>
+          )}
+
           {userPhoto && (
             <Button
               variant={showTryOn ? "default" : "outline"}
