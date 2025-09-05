@@ -6,14 +6,17 @@ import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { useAuth } from '@/contexts/AuthContext'
-import { LogIn, UserPlus } from 'lucide-react'
+import { LogIn, UserPlus, Palette } from 'lucide-react'
 import { toast } from 'sonner'
+import { LogoSelector } from '@/components/ui/logo-selector'
 import novelaLogo from '@/assets/novela-logo.png'
 
 const Auth = () => {
   const { signIn, signUp } = useAuth()
   const navigate = useNavigate()
   const [loading, setLoading] = useState(false)
+  const [showLogoSelector, setShowLogoSelector] = useState(false)
+  const [currentLogo, setCurrentLogo] = useState(novelaLogo)
   
   // Login form state
   const [loginEmail, setLoginEmail] = useState('')
@@ -24,6 +27,12 @@ const Auth = () => {
   const [signupPassword, setSignupPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [fullName, setFullName] = useState('')
+
+  const handleLogoSelect = (logoSrc: string) => {
+    setCurrentLogo(logoSrc)
+    setShowLogoSelector(false)
+    toast.success('Logo updated!')
+  }
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -79,14 +88,33 @@ const Auth = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/30 flex items-center justify-center p-4">
-      <div className="w-full max-w-md">
+      {showLogoSelector ? (
+        <div className="w-full max-w-4xl">
+          <LogoSelector 
+            onSelect={handleLogoSelect}
+            currentLogo={currentLogo}
+          />
+        </div>
+      ) : (
+        <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-20 h-20 mb-4 bg-white rounded-lg p-2 shadow-sm">
-            <img 
-              src={novelaLogo} 
-              alt="Novela Logo" 
-              className="w-full h-full object-contain"
-            />
+          <div className="relative group">
+            <div className="inline-flex items-center justify-center w-20 h-20 mb-4 bg-white rounded-lg p-2 shadow-sm">
+              <img 
+                src={currentLogo} 
+                alt="Novela Logo" 
+                className="w-full h-full object-contain"
+              />
+            </div>
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={() => setShowLogoSelector(!showLogoSelector)}
+              className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-background/90 backdrop-blur-sm border-border/50 opacity-0 group-hover:opacity-100 transition-opacity"
+            >
+              <Palette className="w-3 h-3 mr-1" />
+              Choose Logo
+            </Button>
           </div>
           <h1 className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
             Novela
@@ -215,6 +243,7 @@ const Auth = () => {
           By continuing, you agree to our terms of service and privacy policy.
         </div>
       </div>
+      )}
     </div>
   )
 }
