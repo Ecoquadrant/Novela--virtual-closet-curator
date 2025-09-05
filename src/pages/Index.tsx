@@ -7,7 +7,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { CameraButton } from "@/components/ui/camera-button"
 import { ItemCategorizationForm } from "@/components/wardrobe/item-categorization-form"
-import { WardrobeGrid } from "@/components/wardrobe/wardrobe-grid"
+import { WardrobeClassification } from "@/components/wardrobe/wardrobe-classification"
 import { OutfitSwiper } from "@/components/wardrobe/outfit-swiper"
 import { SavedOutfitModal } from "@/components/wardrobe/saved-outfit-modal"
 import { useWardrobe } from "@/hooks/use-wardrobe"
@@ -19,7 +19,7 @@ import heroImage from "@/assets/wardrobe-hero.jpg"
 import { toast } from "sonner"
 
 const Index = () => {
-  const { items, outfits, addItem, generateOutfitSuggestions, saveOutfit, deleteOutfit, toggleFavoriteOutfit } = useWardrobe()
+  const { items, outfits, loading, addItem, generateOutfitSuggestions, saveOutfit, deleteOutfit, toggleFavoriteOutfit } = useWardrobe()
   const { user, signOut } = useAuth()
   const { profile } = useProfile()
   const [activeTab, setActiveTab] = useState("discover")
@@ -235,7 +235,12 @@ const Index = () => {
                 <CameraButton onCapture={handleImageCapture} />
               </CardHeader>
               <CardContent className="p-0">
-                {items.length === 0 ? (
+                {loading ? (
+                  <div className="text-center py-12 px-6">
+                    <div className="text-6xl mb-4">👕</div>
+                    <h3 className="text-xl font-semibold mb-2">Loading your wardrobe...</h3>
+                  </div>
+                ) : items.length === 0 ? (
                   <div className="text-center py-12 px-6">
                     <div className="text-6xl mb-4">👕</div>
                     <h3 className="text-xl font-semibold mb-2">Your wardrobe is empty</h3>
@@ -245,7 +250,7 @@ const Index = () => {
                     <CameraButton onCapture={handleImageCapture} size="lg" />
                   </div>
                 ) : (
-                  <WardrobeGrid items={items} userPhoto={profile?.avatar_url} />
+                  <WardrobeClassification items={items} userPhoto={profile?.avatar_url} />
                 )}
               </CardContent>
             </Card>
